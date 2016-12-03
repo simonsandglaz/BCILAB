@@ -60,15 +60,14 @@ if isempty(parent) %#ok<NODEF>
         width = 500;
         height = 1;
         % determine position on primary monitor
-        import java.awt.GraphicsEnvironment
-        ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        gd = ge.getDefaultScreenDevice();
-        scrheight = gd.getDisplayMode().getHeight();
-        pos = [from_left, scrheight-from_top, width, height];        
+        sz = [50 500]; % figure size
+        screensize = get(0,'ScreenSize');
+        xpos = ceil((screensize(3)-sz(2))/2); % center the figure on the screen horizontally
+        ypos = ceil((screensize(4)-sz(1))/2); % center the figure on the screen vertically
         % create figure
         release = version; try release = release(find(release=='(')+1:find(release==')')-1); catch end
         figtitle = sprintf('BCILAB %s (%s on %s)',env_version,release,hlp_hostname);
-        parent = figure('DockControls','off','NumberTitle','off','Name',figtitle,'Resize','off','MenuBar','none','Position',pos,'Tag','bcilab_toolwnd');
+        parent = figure('DockControls','off','NumberTitle','off','Name',figtitle,'Resize','off','MenuBar','none','Position', [xpos, ypos, sz(2), sz(1)],'Tag','bcilab_toolwnd');
     end
 end
 
